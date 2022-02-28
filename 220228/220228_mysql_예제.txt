@@ -1,0 +1,93 @@
+p.150
+
+SELECT 필드명
+FROM 테이블명
+WHERE 조건식
+ORDER BY 정렬조건식;
+
+조건식(where) 대신
+between 쓸 수 있다.
+
+조건식(where) 식
+1. and, or
+2. > >=, <, <=, =, <>
+3. between
+4. in(), not in()
+5. like
+
+=> 'book' 테이블의 모든 필드를 출력하시오
+
+SELECT bookid, bookname, publisher, price
+FROM book;
+
+select *
+from book;
+
+=> 'book' 테이블에서 'bookname', 'price'를 선택하시오.
+select bookname, price
+from book;
+
+=> 'book' 테이블에서 가격이 15000원 이상인 모든 자료를 검색하시오.
+select *
+from book
+where price>=15000;
+
+=> 'book' 테이블에서 가격이 10000에서 20000인 모든 자료를 검색하시오.
+select *
+from book
+where price>=10000 and price<=20000;
+
+select *
+from book
+where price between 10000 and 20000;
+
+=> 'book' 테이블에서 출판사이름이 '이상미디어' 와 '대한미디어'를 검색하시오.
+SELECT *
+FROM book
+WHERE publisher IN('이상미디어' or '대한미디어');
+
+=> 'book' 테이블에서 출판사이름이 '이상미디어' 와 '대한미디어' 이면서 가격이 25000원
+이상인 것을 검색하시오.
+SELECT *
+FROM book
+WHERE publisher IN('이상미디어' or '대한미디어') AND price>=25000;
+
+=> 'book' 테이블로부터 'price'가 10000이상이면서
+'bookname'가 '축구'를 포함하는 자료 중
+'bookid'와 'bookname' 그리고 'price'를 '책번호', '제목', '가격'으로 변경하여 출력하시오.
+
+SELECT bookid AS 책번호, bookname AS 제목, price AS 가격
+FROM book
+WHERE bookname LIKE '%축구%' AND price >= 10000;
+
+SELECT bookid AS 책번호, bookname AS 제목, price AS 가격
+FROM book
+WHERE bookname LIKE '%축구%' AND price >= 10000
+ORDER BY 가격 DESC, 제목 ASC;
+(가격 내림차순인데 가격이 동일 할 경우 제목의 오름차순으로 정렬한다.)
+
+
+SELECT SUM(saleprice) AS 총판매액, AVG(saleprice) AS 평균판매액, MAX(saleprice) AS 최대판매액,
+MIN(saleprice) AS 최소판매액, COUNT(saleprice) AS 거래건수
+FROM orders;
+
+
+=> 'orders' 테이블로부터 'custid'별 'saleprice'의 '합계'와 '평균', '거래건수'를 출력하시오.
+
+SELECT custid, SUM(saleprice) AS 합계, AVG(saleprice) AS 평균, COUNT(saleprice) AS 거래건수
+FROM orders
+GROUP BY custid;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

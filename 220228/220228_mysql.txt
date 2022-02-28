@@ -1,0 +1,19 @@
+=mysql 설치하는 곳=
+www.mysql.com
+
+다운로드로 가서
+
+MySQL Community (GPL) Downloads 
+// 프리버전
+
+MySQL Community Server
+
+Go to Download Page
+
+(mysql-installer-community-8.0.28.0.msi)
+
+=MySQL Community Server 설치
+choosing a setup type (developer default 체크) next
+
+
+
