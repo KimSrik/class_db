@@ -1,0 +1,36 @@
+1. 11, '홍길동전', '연희출판사', 20000을
+    book 테이블의 bookid, bookname, publisher, price에 삽입
+
+insert into book(bookid, bookname, publisher, price)
+values(11, '홍길동전', '연희출판사', 20000);
+
+insert into book(bookid, bookname, publisher, price)
+values(12, '성춘향전', '연희출판사', 18000);
+
+insert into book(bookname, bookid, publisher, price)
+values('강감찬전', 13, '거기출판사', 18000);
+(필드명 순서를 바꾸면 밸류값을 넣을때도 바꿔서 넣으면 된다.)
+
+insert into book
+values(14, '을지문덕전', NULL, NULL);
+
+2. 을지문덕전의 publisher와 price를 각각 '대한미디어', 16500으로 변경하시오.
+
+update book
+set publisher = '대한미디어', price = 16500
+where bookname like '을지문덕전';
+
+3. 가장 큰 price를 가지는 레코드의 publisher를 'BEST'로 변경하시오.
+
+update book
+set publisher = 'BEST'
+where price = (
+	select max(price)
+    from book
+);
+(안되는 쿼리문)
+
+
+
+
+
