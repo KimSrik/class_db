@@ -1,0 +1,16 @@
+drop database if exists study;
+
+drop user if exists study;
+
+-- create user 아이디@위치 identified with mysql_native_password by 암호;
+-- (위치에 %을 넣으면 어떤 위치에서도 접근이 가능하다.)
+
+-- create user study@localhost identified with mysql_native_password by 'study';
+
+create database study;
+
+-- grant all privileges on study.* to study@localhost with grant option;
+
+create table t1(
+	attr 
+);

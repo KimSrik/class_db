@@ -1,0 +1,159 @@
+notice DB 생성 (기존의 DB가 존재한다면 삭제하시오.)
+
+notice.notice_table 생성
+notice_table.id(정수형)
+notice_table.title(문자 40자 이내)
+notice_table.content(문자 500자 이내)
+notice_table.user(문자 10자 이내)
+
+	id	title	content		user
+	1	제목	내용들		kim
+	2	제목	내용들		lee
+	3	제목	내용들		choi
+	4	제목	내용들		kim
+	5	제목	내용들		kim
+
+
+
+
+drop database if exists notice;
+
+create database notice;
+
+use notice;
+
+create table notice_table(
+	id integer,
+    title varchar(40),
+    content varchar(500),
+    user_name varchar(100)
+);
+
+show tables;
+
+insert into notice_table(id, content, title, user_name)
+		values(1, '내용들', '제목', 'kim');
+
+insert into notice_table
+		values(2, '제목', '내용들', 'lee');
+        
+insert into notice_table
+		values(3, '제목', '내용들', 'choi');
+        
+insert into notice_table
+		values(4, '제목', '내용들', 'kim');
+        
+insert into notice_table
+		values(5, '제목', '내용들', 'kim');
+        
+insert into notice_table(id, content, user_name)
+		values(6, '내용들', 'cho');
+        
+
+
+update notice_table set title='새로운_제목' where id = 6;
+
+update notice_table set user_name = 'jo' where user_name = 'cho';
+
+delete from notice_table where id = 6;
+
+
+
+madang2 DB 생성 (기존의 DB가 존재한다면 삭제하시오.)
+
+madang2.book 생성
+book.bookid(정수형, 필수, 자동)
+book.bookname(문자(20), 필수)
+book.publisher(문자(10), 필수)
+book.price(정수형)
+
+	id	title	content		user
+	1	제목	내용들		kim
+	2	제목	내용들		lee
+	3	제목	내용들		choi
+	4	제목	내용들		kim
+	5	제목	내용들		kim
+
+-- drop database if exists madang2;
+
+-- create database madang2;
+
+-- use madang2;
+
+/*
+create table book(
+	bookid integer not null auto_increment primary key,
+    bookname varchar(20) not null,
+    publisher varchar(10) not null,
+    price integer
+);
+*/
+
+insert into book(bookname, publisher, price)
+		values('성춘향전', '연희', null);
+
+select *
+from book;
+
+
+
+
+
+
+-- 첫번째 속성명으로 '속성1'로 변경
+-- 두번째 속성명으로 '속성2' 문자10자로 변경
+-- 세번째 속성명으로 '속성3' 문자20자로 변경
+
+-- alter table table1 change arrt1 속성1 integer
+-- alter table table1 change arrt2 속성2 varchar(10);
+-- alter table table1 change arrt3 속성3 varchar(20);
+
+-- alter table table1 add 속성4 int;
+
+-- alter table table1 drop column 속성4;
+
+alter table table1 modify 속성3 int;
+
+
+
+====================================
+drop database if exists notice_db;
+
+create database notice_db;
+
+use notice_db;
+
+
+create table notice1(
+	게시번호 integer primary key auto_increment,
+    문서제목 varchar(64) not null,
+    게시일 timestamp default now(),
+    작성자 varchar(12) not null,
+    내용 varchar(500) not null
+);
+
+insert into notice1(문서제목, 작성자, 내용) values('문서제목1', '홍길동', '내용...');
+insert into notice1(문서제목, 작성자, 내용) values('문서제목2', '홍길동', '내용...');
+insert into notice1(문서제목, 작성자, 내용) values('문서제목3', '홍길동', '내용...');
+insert into notice1(문서제목, 작성자, 내용) values('문서제목4', '홍길동', '내용...');
+insert into notice1(문서제목, 작성자, 내용) values('문서제목5', '홍길동', '내용...');
+insert into notice1(문서제목, 작성자, 내용) values('문서제목6', '홍길동', '내용...');
+insert into notice1(문서제목, 작성자, 내용) values('문서제목7', '홍길동', '내용...');
+insert into notice1(문서제목, 작성자, 내용) values('문서제목8', '홍길동', '내용...');
+insert into notice1(문서제목, 작성자, 내용) values('문서제목9', '홍길동', '내용...');
+insert into notice1(문서제목, 작성자, 내용) values('문서제목10', '홍길동', '내용...');
+
+select * from notice1;
+
+=================================
+
+
+
+
+
+
+
+
+
+
+

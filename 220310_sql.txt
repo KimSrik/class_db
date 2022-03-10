@@ -1,0 +1,87 @@
+-부속 질의-
+select bookname
+from book
+where price = (
+	select max(price)
+    from book
+);
+
+
+/* 판매가 이루어지지 않은 도서 목록 */
+
+select bookname as '미판매 도서명'
+from book
+where bookid not in(
+	select bookid
+    from orders
+);
+
+(distict? 처럼 중복 된 게 없어지고 결과가 나옴)
+select bookname as '판매 도서명'
+from book 
+where exists(
+	select *
+    from orders
+    where book.bookid = orders.bookid
+);
+
+/* insert into 테이블(필드명...) values(값...); */
+
+insert into book(bookid, bookname, publisher, price)
+	values(11, '동계올림픽','연희출판사', 25000);
+
+
+/* create database 데이터베이스명 */
+
+create database tmp;
+
+/* drop database */
+
+drop database if exists 테이블명
+(테이블명이 존재할 시 삭제 한다.)
+
+/* create table 테이블명(....) */
+
+create table tmp1(
+    attr1 integer,
+    attr2 varchar(10),
+    attr3 varchar(10),
+    attr4 integer
+);
+
+/* drop table 테이블명 */
+(테이블을 아예 삭제할 때)
+
+drop table table1;
+
+
+create table qna(
+	번호 integer,
+    제목 varchar(40),
+    내용 varchar(255),
+    작성자 varchar(10),
+    작성일 date
+);
+
+insert into qna 
+values(1, '회원가입방법1', '어쩌구 저쩌구....', '홍길동', '2014-01-01');
+insert into qna 
+values(2, '회원가입방법2', '어쩌구 저쩌구....', '이몽룡', '2014-01-02');
+insert into qna 
+values(3, '회원가입방법3', '어쩌구 저쩌구....', '성춘향', '2014-01-03');
+insert into qna 
+values(4, '회원가입방법4', '어쩌구 저쩌구....', '월매', '2014-01-04');
+insert into qna 
+values(5, '회원가입방법5', '어쩌구 저쩌구....', '변사또', '2014-01-05');
+
+
+/* update 테이블명 set 필드명=바꿀내용, where 조건 */
+
+
+
+
+
+
+
+
+
