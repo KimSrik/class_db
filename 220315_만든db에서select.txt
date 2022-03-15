@@ -1,0 +1,4 @@
+select 간호사.성명, concat(count(*), '건') as 간호건수
+from 간호사 join 환자 on 간호사.간호사id = 환자.간호사id
+group by 간호사.간호사ID;
+
