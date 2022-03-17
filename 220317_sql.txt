@@ -1,0 +1,44 @@
+-- 수강하지 않은 학생 명부
+select 학생.번호 학번, 학생.이름 성명
+from 학생
+where 번호 not in(select 학생번호 from 수강내역);
+
+select distinct 학생.번호 학번, 학생.이름 성명
+from 학생 join 수강내역 on 학생.번호 not in(select 학생번호 from 수강내역);
+
+(distinct는 중복값을 제거)
+
+
+-- 교수별 담당학생 명단을 출력하시오
+select 교수.번호 교번, 교수.이름 교수자명, 학생.번호 학번, 학생.이름 학생명
+from 교수 join 학생_has교수 on 교수.번호 = 학생_has_교수.교수번호 join 학생 on 학생.번호 = 학생_has_교수.학생번호;
+
+
+-- 학과명이 '컴퓨터학과'인 자료의 학과번호와 학과명을 각각 '0111', '컴퓨터공학과'로 변경하시오.
+
+update 교수 set 소속학과번호 = '0111' where 소속학과번호 in(select 번호 from 학과 where 학과명 = '컴퓨터학과');
+
+update 학생 set 학과번호 = '0111' where 학과번호 in(select 번호 from 학과 where 학과명 = '컴퓨터학과');
+
+update 학과 set 학과명 = '컴퓨터공학과', 번호='0111' where 학과명 = '컴퓨터학과';
+
+
+(서순이 중요하다. 먼저 학과 테이블을 건드리면 다른데서 참조를 못함.)
+
+
+-- 컴퓨터학과 인 것을 셀렉.
+select 학생.번호 학번, 학생.이름 학생성명, 교수.이름 교수명, 학과.번호 학과번호, 학과.학과명 학과명
+from 학생 join 학과 on 학생.학과번호 = 학과.번호 join 교수 on 교수.소속학과번호 = 학과.번호
+where 학과.학과명 = '컴퓨터학과';
+
+
+
+-- 강좌를 진행하지 않는 교수와 관련된 자료를 삭제하시오.
+select *
+from 교수
+where 번호 not in(select 교수번호 from 강좌);
+
+
+
+delete from 교수
+where 번호 not in (select 교수번호 from 강좌);
