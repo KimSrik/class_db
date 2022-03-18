@@ -1,0 +1,32 @@
+외래키(foreign key) - 참조무결성
+
+
+-- 외래키 설정
+constraint fk명칭 
+foreign key (외래키속성) references 참조테이블(참조기본키);
+
+-- 외래키 삭제
+alter table 테이블명 drop constraint fk명칭;
+
+-- 외래키 추가
+alter table 테이블명 add constraint fk명칭 foreign key (외래키속성) references 참조테이블(참조기본키);
+
+-- 외래키 해제
+set foreign_key_checks = 0;
+
+-- 외래키 설정
+set foreign_key_checks = 1;
+
+
+
+참조무결성을 유지하기 위한 update, delete
+
+on update cascade;
+(기본키가 삭제되면 참조하는 외래키도 변경)
+
+on delete cascade;
+(기본키가 삭제되면 참조하는 외래키도 삭제)
+
+
+
+

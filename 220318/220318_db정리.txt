@@ -1,0 +1,14 @@
+1. 데이터베이스 특징
+ 가. 통합된 데이터
+ 나. 실시간 접근성(Real Time)
+ 다. 계속적 변화
+ 라. 동시 사용(공유)
+ 마. 내용에 의한 참조
+
+2. DATABASE 구조
+ 가. 물리스키마(저장DB)
+      (DBMS)-MySQL, MariaSQL, MSSQL(Access)...
+ 나. 논리스키마
+   1) 내부스키마 (Internal Schema) : (사용자 : DBA) - SQL
+   2) 개념스키마 (Conceptual Schema) : (사용자 : DBA) -SQL
+   3) 외부스키마 (External Schema) : (사용자 : 응용프로그래머, 일반사용자) - DML
