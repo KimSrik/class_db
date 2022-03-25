@@ -1,9 +1,13 @@
 package user;
 
 public class User {
+	
 	private String userID;
 	private String userPassword;
-	private String userName;	
+	private String userName;
+	private String userAddress;
+	private String userBirthday;
+	private String userGender;
 	private String userEmail;
 	private String userPhone;
 	
@@ -25,6 +29,24 @@ public class User {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public String getUserAddress() {
+		return userAddress;
+	}
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
+	}
+	public String getUserBirthday() {
+		return userBirthday;
+	}
+	public void setUserBirthday(String userBirthday) {
+		this.userBirthday = userBirthday;
+	}
+	public String getUserGender() {
+		return userGender;
+	}
+	public void setUserGender(String userGender) {
+		this.userGender = userGender;
 	}
 	public String getUserEmail() {
 		return userEmail;

@@ -1,92 +1,75 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.io.PrintWriter" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="utf-8">
-<title>로그인</title>
-    <style>
-        *{box-sizing:border-box;margin:0;padding:0;}
-        a{text-decoration:none;color:black;}
-        
-        .nav {
-            margin-bottom:30px;
-        }
-        .nav .container{
-            display:flex;
-            flex-flow:row nowrap;
-            justify-content:space-between;
-            padding:20px;
-            background-color:#999;
-        }
-        .nav .container a{
-            color:#fff;
-        }
-        .nav .container a.active{font-weight:900;color:#000;}
-        .login_form .container{
-            width:300px;
-            max-width:800px;
-            margin:0 auto;
-            border-radius:10px;
-            padding:20px;
-            background-color:#ccc;
-        }
-        .login_form .container div{
-            margin-bottom:16px;
-        }
-        .login_form .container div:last-child{
-            margin-bottom:0;
-        }
-        .login_form input{
-            display:block;
-            width:100%;
-            height:30px;
-            padding:0 20px;
-        }
-        .login_form input[type="submit"]{
-            color:#fff;
-            background-color:#333;
-        }
-
-        @media (min-width:640px){
-            .login_form .container{
-                width:560px;
-            }
-        }
-        @media (min-width:940px){
-            .login_form .container{
-                width:80%;
-            }
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웹게시판</title>
+    <link rel="stylesheet" href="./css/login.css">    
 </head>
 <body>
-    <nav class="nav">
-        <div class="container">
-            <div class="notice">
-                <a href="./notice.jsp">게시판 바로가기</a>
+	<% 
+		PrintWriter script = response.getWriter();
+		if(session.getAttribute("userID") != null){
+			//로그인 중			
+			script.println("<script>");
+			script.println("alert('잘못된 접근입니다. 매인페이지로 돌아갑니다.');");
+			script.println("location.href='./main.jsp';");				
+			script.println("</script>");
+		}
+	%>
+    <div class="wrap">
+        <header class="header">
+            <div class="container">
+                <nav class="nav">
+                    <ul class="gbl-nav">
+                        <li class="nav-left">
+                            <ul>
+                                <li class="logo"><a href="./main.jsp">게시판 만들기</a></li>
+                                <li><a href="./main.jsp">메인</a></li>
+                                <li><a href="./notice.jsp">게시판</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-right">
+                            <ul>
+                                <li><a href="./login.jsp" class="active">로그인</a></li>
+                                <li><a href="#" style="display:none;">로그아웃</a></li>
+                                <li><a href="./join.jsp">회원가입</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-            <div class="login-join">            	
-            	<a href="./login.jsp" class="active">로그인 바로가기</a>
-                <a href="./join.jsp">회원가입 바로가기</a>
+        </header>
+        <section class="sec main-sec">
+            <div class="container">
+                <div class="contents">                    
+                    <div class="sec-tit">로그인</div>
+                    <form action="./loginAction.jsp" method="post">
+                        <div class="u-id">
+                            <input type="text" name="userID" id="userID" placeholder="아이디">
+                        </div>
+                        <div class="u-pass">
+                            <input type="password" name="userPassword" id="userPassword" placeholder="패스워드">
+                        </div>
+                        <div class="g-btn">
+                            <input type="submit" value="로그인">
+                            <input type="reset" value="취소">
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    </nav>
-
-    <section class="sec login_form">
-        <div class="container">
-            <form action="loginAction.jsp" method="post">
-                <div class="user-id">
-                    <input type="text" name="userID" id="user-id" placeholder="아이디">
-                </div>
-                <div class="user-password">
-                    <input type="password" name="userPassword" id="user-pass" placeholder="패스워드">
-                </div>
-                <div class="btn-submit">
-                    <input type="submit" value="로그인">
-                </div>
-            </form>
-        </div>
-    </section>
+        </section>
+        <footer class="footer">
+            <div class="container">
+                <address>
+                    Copyright CHO
+                </address>
+            </div>
+        </footer>
+    </div>
 </body>
 </html>
