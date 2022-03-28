@@ -1,61 +1,69 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-<%@ page import="user.UserDAO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="user.UserDAO" %>
 <%@ page import="java.io.PrintWriter" %>
 <% request.setCharacterEncoding("utf-8"); %>
 
+<!-- class를 자바빈즈 사용함, 이름 id설정한 이름 -->
 <jsp:useBean id="user" class="user.User" scope="page"/>
+<!-- 회원가입 페이지에서 받아온 userID User.userID에 저장 -->
 <jsp:setProperty name="user" property="userID"/>
+<!-- 회원가입 페이지에서 받아온 userPassword User.userPassword에 저장 -->
 <jsp:setProperty name="user" property="userPassword"/>
+<!-- 회원가입 페이지에서 받아온 userName User.userName에 저장 -->
 <jsp:setProperty name="user" property="userName"/>
-<jsp:setProperty name="user" property="userAddress"/>
-<jsp:setProperty name="user" property="userBirthday"/>
+<!-- 회원가입 페이지에서 받아온 userGender User.userGender에 저장 -->
 <jsp:setProperty name="user" property="userGender"/>
+<!-- 회원가입 페이지에서 받아온 userEmail User.userEmail에 저장 -->
 <jsp:setProperty name="user" property="userEmail"/>
-<jsp:setProperty name="user" property="userPhone"/>
 
-   
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>회원가입</title>
 </head>
 <body>
 	<%
 		PrintWriter script = response.getWriter();
-		if(user.getUserID()==null || user.getUserPassword()==null || user.getUserName()==null || user.getUserAddress()==null || user.getUserBirthday()==null || user.getUserGender()==null || user.getUserEmail()==null || user.getUserPhone()==null){
+	
+	// 로그인 상태 확인
+				String userID = null;
+				if(session.getAttribute("userID") != null){
+					userID = (String)session.getAttribute("userID");
+				}
+		
+		
+		// 로그인중일때 로그인 방지
+		if(userID != null){
 			script.println("<script>");
-			script.println("alert('입력자료를 확인하세요');");
-			script.println("history.back();");				
-			script.println("</script>");			
-		}else {
-			if(session.getAttribute("userID") != null){
-				//로그인 중				
+			script.println("alert('로그인 상태입니다.');");
+			script.println("location.href = './main.jsp';");
+			script.println("</script>");
+		}else{
+	
+			if(user.getUserID() == null || user.getUserPassword() == null || user.getUserName() == null || user.getUserGender() == null || user.getUserEmail() == null){
 				script.println("<script>");
-				script.println("alert('로그인 중입니다.');");
-				script.println("location.href='./main.jsp';");				
+				script.println("alert('가입정보를 확인해주세요.');");
+				script.println("history.back();");
+				script.println("</script>");
+			}else {
+				session.setAttribute("userID", user.getUserID());
+				UserDAO userDAO = new UserDAO();
+				int result = userDAO.join(user.getUserID(), user.getUserPassword(), user.getUserName(), user.getUserGender(), user.getUserEmail());
+				script.println("<script>");
+				if(result == -1){
+					// 로그인 성공					
+					script.println("alert('회원가입 실패.');");
+					script.println("history.back()");
+				}else{
+					// 데이터베이스 오류
+					script.println("alert('회원가입 성공.');");
+					script.println("location.href = './main.jsp';");
+				}
 				script.println("</script>");
 			}
-			UserDAO userDAO = new UserDAO();
-			int result = userDAO.join(user);
-			
-			if(result == -3){
-				//데이터베이스 오류
-				script.println("<script>");
-				script.println("alert('데이터베이스 오류')");
-				script.println("location.href='./main.jsp'");
-				script.println("</script>");
-			}else{
-				//회원가입 성공
-				script.println("<script>");
-				script.println("alert('회원 가입을 환영합니다.')");
-				script.println("location.href='./main.jsp'");
-				script.println("</script>");
-			}			
 		}
 	%>
-
-	
 </body>
 </html>
