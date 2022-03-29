@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.io.PrintWriter" %>
-<% request.setCharacterEncoding("utf-8"); %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,25 +8,6 @@
 <title>JSP를 이용한 게시판 만들기</title>
 </head>
 <body>
-	<%
-			PrintWriter script = response.getWriter();
-	
-			// 로그인 상태 확인
-			String userID = null;
-			if(session.getAttribute("userID") != null){
-				userID = (String)session.getAttribute("userID");
-			}
-			
-			if(userID == null){
-				script.println("<script>");
-				script.println("alert('로그인 후 이용가능합니다.');");
-				script.println("location.href = './login.jsp';");
-				script.println("</script>");
-			}
-	
-	%>
-
-
 	<section class="wrap">
 		<!-- 공통 영역 -->
 		<header>
@@ -53,28 +32,11 @@
 							<a href="#" class="dropdown-toggle"
 								data-toggle="dropdown" role="button" aria-haspopup="true"
 								aria-expanded="false">접속하기<span class="caret"></span></a>
-							
-							<%
-								if(userID == null){
-							%>
-							
 								
-							<!-- 로그아웃 상태 -->	
 							<ul class="dropdown-menu">
 								<li class="active"><a href="./login.jsp">로그인</a></li>
 								<li><a href="./join.jsp">회원가입</a></li>
 							</ul>
-							
-							<%} else{ %>
-							
-							<!-- 로그인 상태 -->
-							<ul class="dropdown-menu">
-								<li class="active"><a href="./logoutAction.jsp">로그아웃</a></li>
-								
-							</ul>
-							
-							<%} %>
-							
 						</li>
 					</ul>
 				</div>
@@ -83,23 +45,33 @@
 		
 		<!-- 페이지별 컨텐츠 영역 시작 -->
 		<section>
-			<!-- 기록 양식 -->
+			<!-- 비밀번호 변경 양식 -->
 			<div class="container">
 				<div class="col-lg-12">
 					<div class="jumbotron" style="margin-top: 20px; padding-top: 30px">
-						<form method="post" action="./writeAction.jsp">
-							<h2 style="text-align: center">글쓰기 양식</h2>
+						<form method="post" action="./changeAction.jsp">
+							<h2 style="text-align: center">비밀번호 변경</h2>
 							<div class="form-group">
-								<input type="text" placeholder="제목" class="form-control" name="bbsTitle">
+								<input type="hidden" class="form-control" name="userID">
 							</div>
 							<div class="form-group">
-								<input type="text" placeholder="글내용" class="form-control" name="bbsContent">
+								<input type="password" placeholder="현재 비밀번호" class="form-control" name="userPassword">
 							</div>
-							<input type="submit" value="글저장" class="btn btn-primary form-control">
+							<div class="form-group">
+								<input type="password" placeholder="변경할 패스워드" class="form-control" name="userPassword">
+							</div>
+							<div class="form-group">
+								<input type="password" placeholder="변경할 패스워드 한 번 더 입력해주세요." class="form-control" name="userPassword">
+							</div>
+
+							<input type="submit" value="변경완료" class="btn btn-primary form-control">
+							<input type="reset" value="취소" class="btn btn-primary form-control">
 						</form>
 					</div>
 				</div>
-			</div>	
+			</div>
+		
+		
 		</section>
 		
 	</section>

@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
-<%@ page import="bbs.BbsDAO" %>
-<%@ page import="bbs.Bbs"%>
+<%@ page import="user.UserDAO" %>
+<%@ page import="user.User" %>
+
 <% request.setCharacterEncoding("utf-8"); %> 
 <!DOCTYPE html>
 <html>
@@ -21,23 +22,17 @@
 				userID = (String)session.getAttribute("userID");
 			}
 			
-			// 넘어온 bbsID를 초기화하고 request가 존재한다면 bbsID로 셋팅
-			int bbsID = 0;
-			if(request.getParameter("bbsID") != null){
-				bbsID = Integer.parseInt(request.getParameter("bbsID"));
-			}
 			
 			// 존재하지 않는 또는 잘못된 접근 처리
-			if(bbsID == 0){
+			if(userID == null){
 				script.println("<script>");
 				script.println("alert('잘못된 접근입니다.');");
-				script.println("location.href = './bbs.jsp';");
+				script.println("location.href = './login.jsp';");
 				script.println("</script>");
 			}
 			
-			// bbs인스턴스 생성
-			Bbs bbs = new BbsDAO().getBbs(bbsID);
 			
+			User user = new UserDAO().infoCheck(userID);
 	%>
 
 
@@ -62,9 +57,7 @@
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown">
-							<a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">접속하기<span class="caret"></span></a>
+							
 							
 							<%
 								if(userID == null){
@@ -72,15 +65,23 @@
 							
 								
 							<!-- 로그아웃 상태 -->	
+							<a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">접속하기<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li class="active"><a href="./login.jsp">로그인</a></li>
 								<li><a href="./join.jsp">회원가입</a></li>
 							</ul>
 							
 							<%} else{ %>
-							
+							<a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">마이페이지<span class="caret"></span></a>
 							<!-- 로그인 상태 -->
 							<ul class="dropdown-menu">
+								<li><a href="./infoCheck.jsp">회원정보확인</a></li>
+								<li><a href="./join.jsp">패스워드변경</a></li>
+								<li><a href="./join.jsp">회원 탈퇴</a></li>
 								<li class="active"><a href="./logoutAction.jsp">로그아웃</a></li>
 								
 							</ul>
@@ -95,29 +96,27 @@
 		
 		<!-- 페이지별 컨텐츠 영역 시작 -->
 		<section>
-			<!-- 글읽기 양식 -->
+			<!-- 나의 정보 양식 -->
 			<div class="container">
 				<div class="col-lg-12">
 					<div class="jumbotron" style="margin-top: 20px; padding-top: 30px">
-						<h2 style="text-align: center">게시판 글 보기</h2>
+						<h2 style="text-align: center">내 정보 보기</h2>
 						<div>
-							<span>제목</span>
-							<span><%= bbs.getBbsTitle() %></span>
+							<span>아이디</span>
+							<span><%= user.getUserID() %></span>
 							<br>
-							<span>내용</span>
-							<span><%= bbs.getBbsContent() %></span>
+							<span>이름</span>
+							<span><%= user.getUserName() %></span>
 							<br>
-							<span>작성자</span>
-							<span><%= bbs.getUserID() %></span>
+							<span>성별</span>
+							<span><%= user.getUserGender() %></span>
 							<br>
-							<span>작성일</span>
-							<span><%= bbs.getBbsDate() %></span>
+							<span>이메일</span>
+							<span><%= user.getUserEmail() %></span>
 						</div>
 					</div>
 					<div class="button-group">
-						<a href="./bbs.jsp" class="btn btn-success">목록</a>
-						<a href="./deleteAction.jsp?bbsID=<%= bbsID %>" class="btn btn-success">삭제</a>
-						<a href="./update.jsp?bbsID=<%= bbsID %>" class="btn btn-success">수정</a>
+						<a href="./main.jsp" class="btn btn-success">메인으로</a>
 					</div>
 				</div>
 			</div>	

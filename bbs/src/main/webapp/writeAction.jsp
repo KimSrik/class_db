@@ -47,12 +47,10 @@
 				BbsDAO bbsDAO = new BbsDAO();
 				int result = bbsDAO.write(bbs.getBbsTitle(), userID, bbs.getBbsContent());
 				script.println("<script>");
-				if(result == -1){
-					// 로그인 성공					
+				if(result == -1){				
 					script.println("alert('글쓰기 실패.');");
 					script.println("location.href = './main.jsp';");
 				}else{
-					// 데이터베이스 오류
 					script.println("alert('글쓰기 성공.');");
 					script.println("location.href = './bbs.jsp';");
 				}

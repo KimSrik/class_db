@@ -42,7 +42,7 @@ public class BbsDAO {
 	
 	// 문서번호 구하기
 	public int getNext() {
-		String SQL = "select bbsID from bbs order by bbsID desc";
+		String SQL = "select bbsID from bbs where bbsAvailable = 1 order by bbsID desc";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
@@ -81,7 +81,12 @@ public class BbsDAO {
 		ArrayList<Bbs> list = new ArrayList<Bbs>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext() - ((pageNumber-1)*10));
+			
+				//pstmt.setInt(1, getNext() - ((pageNumber-1)*10));
+		
+				System.out.println(lastNum((pageNumber-1)*10));
+				pstmt.setInt(1, lastNum((pageNumber-1)*10));
+
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Bbs bbs = new Bbs();
@@ -180,5 +185,38 @@ public class BbsDAO {
 			e.printStackTrace();
 		}
 		return -1;	// 데이터베이스 오류
+	}
+	
+	
+	
+	public int getNum() {
+		String SQL = "select * from bbs where bbsAvailable = 1";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			int recordCount = 0;
+			while(rs.next()) {
+				recordCount++;
+			}return recordCount;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	public int lastNum(int num) {
+		String SQL = "select bbsID from bbs where bbsAvailable = 1 order by bbsID desc limit ?, 10";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1);
+			} else {
+				return 0;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 }

@@ -40,9 +40,7 @@
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown">
-							<a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">접속하기<span class="caret"></span></a>
+							
 							
 							<%
 								if(userID == null){
@@ -50,15 +48,23 @@
 							
 								
 							<!-- 로그아웃 상태 -->	
+							<a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">접속하기<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li class="active"><a href="./login.jsp">로그인</a></li>
 								<li><a href="./join.jsp">회원가입</a></li>
 							</ul>
 							
 							<%} else{ %>
-							
+							<a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">마이페이지<span class="caret"></span></a>
 							<!-- 로그인 상태 -->
 							<ul class="dropdown-menu">
+								<li><a href="./infoCheck.jsp">회원정보확인</a></li>
+								<li><a href="./change.jsp">패스워드변경</a></li>
+								<li><a href="./join.jsp">회원 탈퇴</a></li>
 								<li class="active"><a href="./logoutAction.jsp">로그아웃</a></li>
 								
 							</ul>

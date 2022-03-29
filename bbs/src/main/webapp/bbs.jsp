@@ -99,11 +99,19 @@
 						<% 
 						BbsDAO bbsDAO = new BbsDAO();
 						ArrayList<Bbs> list = bbsDAO.getList(pageNumber);
+						int lastPage = 0;
+						//System.out.println(bbsDAO.getNum()%10);
+						if(bbsDAO.getNum()%10 == 0){
+							lastPage = (bbsDAO.getNum()/10);
+						}else{
+							lastPage = (bbsDAO.getNum()/10)+1;
+						}
+						
 						for(int idx=0; idx<list.size(); idx++){
 						%>
 						<tr>
 							<td><%= list.get(idx).getBbsID() %></td>
-							<td><a href="./view.jsp?bbsID=<%= list.get(idx).getBbsID() %>" style="color: #000; text-decoration: none;"><%= list.get(idx).getBbsTitle() %><a></a></td>
+							<td><a href="./view.jsp?bbsID=<%= list.get(idx).getBbsID() %>" style="color: #000; text-decoration: none;"><%= list.get(idx).getBbsTitle() %></a></td>
 							<td><%= list.get(idx).getUserID() %></td>
 							<td><%= list.get(idx).getBbsDate() %></td>
 						</tr>
@@ -116,16 +124,33 @@
 					if(pageNumber>1){
 				%>
 				<a href="./bbs.jsp?pageNumber=<%= pageNumber - 1 %>" class="btn btn-success">이전</a>
-				<%}
+				<%}else {%>
+					<a href="#" class="btn btn-success">이전</a>
+				<%} 
+					for(int pIdx=0; pIdx<lastPage; pIdx++){
+						%>						
+						<a href="./bbs.jsp?pageNumber=<%= pIdx + 1 %>" style="color: #000; text-decoration: none"><% out.print(pIdx+1); %></a>
+						<%
+					}	
+				
 					if(bbsDAO.nextPage(pageNumber+1)){
 				%>
 				<a href="./bbs.jsp?pageNumber=<%= pageNumber + 1 %>" class="btn btn-success">다음</a>
-				<%} %>
+				<%}else  {%>
+				<a href="#" class="btn btn-success">다음</a>
+				<% }
+								if(userID == null){
+				%>
+				<a href="./write.jsp" class="btn btn-success" style="display:none;">글쓰기</a>
+				<%
+								}else{
+				%>
 				<a href="./write.jsp" class="btn btn-success">글쓰기</a>
-				
+				<%
+								}
+				%>
 			</div>
-		</section>
-		
+		</section>	
 	</section>
 	
 	
