@@ -115,6 +115,70 @@ public class BbsDAO {
 		return false;
 	}
 	
+	// 문서 읽기
+	public Bbs getBbs(int bbsID) {
+		String SQL = "select * from bbs where bbsID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, bbsID);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setBbsID(rs.getInt(1));
+				bbs.setBbsTitle(rs.getString(2));
+				bbs.setUserID(rs.getString(3));
+				bbs.setBbsDate(rs.getString(4));
+				bbs.setBbsContent(rs.getString(5));
+				bbs.setBbsAvailable(rs.getInt(6));
+				return bbs;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
+	// 문서 수정 메서드
+	public int update(String bbsTitle, String userID, String bbsContent, int bbsID) {
+		String SQL = "update bbs set bbsTitle = ?, bbsContent = ? where userID = ? and bbsID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, bbsTitle);
+			pstmt.setString(2, bbsContent);
+			pstmt.setString(3, userID);
+			pstmt.setInt(4, bbsID);
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	// 데이터베이스 오류
+	}
 	
+	// 문서 진짜 삭제 메서드
+//	public int delete(String userID, int bbsID) {
+//		String SQL = "delete from bbs where bbsID = ? and userID = ?";
+//		try {
+//			PreparedStatement pstmt = conn.prepareStatement(SQL);
+//			pstmt.setInt(1, bbsID);
+//			pstmt.setString(2, userID);
+//			return pstmt.executeUpdate();
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		return -1;	// 데이터베이스 오류
+//	}
+	
+	// 문서 임시 삭제 메서드
+	public int delete(String userID, int bbsID) {
+		String SQL = "update bbs set bbsAvailable = 0 where bbsID = ? AND userID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, bbsID);
+			pstmt.setString(2, userID);
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	// 데이터베이스 오류
+	}
 }

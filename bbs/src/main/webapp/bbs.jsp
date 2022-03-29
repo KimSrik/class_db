@@ -103,7 +103,7 @@
 						%>
 						<tr>
 							<td><%= list.get(idx).getBbsID() %></td>
-							<td><%= list.get(idx).getBbsTitle() %></td>
+							<td><a href="./view.jsp?bbsID=<%= list.get(idx).getBbsID() %>" style="color: #000; text-decoration: none;"><%= list.get(idx).getBbsTitle() %><a></a></td>
 							<td><%= list.get(idx).getUserID() %></td>
 							<td><%= list.get(idx).getBbsDate() %></td>
 						</tr>
